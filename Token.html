@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Token</title>
+    <script src="web3.min.js"></script>
+    
+  </head>
+  <body bgcolor="skyblue"><center>
+<h1><legend><marque>TOKENS</marque></legend></h1>
+
+ <label>Total_supply: <input id="ts" type="text" /></label>
+<button id="b1" onclick="tot_sup()">view total supply</button><br>
+
+
+<label>to address:<input id="toadd" type="text" /></label>
+<label>Amount:<input id="amount" type="text" /></label>
+<button id="b2" onclick="transfer()">Transfer</button><br>
+
+
+<label>Amount:<input id="amnt" type="text" /></label>
+<button id="b3" onclick="mint()">Mint</button><br>
+
+<label>Spender address:<input id="spnadd" type="text" /></label>
+</label>Value:<input id="val" type="text" /></label>
+<button id="b4" onclick="approve()">Approve</button><br>
+
+<label>Owner address:<input id="ownadd" type="text" /></label>
+<label>Spender address:<input id="spndadd" type="text" /></label>
+<button id="b5" onclick="allowance()">Allowance</button><br>
+
+<label>From address:<input id="frmadd" type="text" /></label>
+<label>To address:<input id="toadd" type="text" /></label>
+<label>Value:<input id="value" type="text" /></label>
+<button id="b6" onclick="transferFrom()">transfer_from</button><br>
+
+<button id="b7" onclick="view_balance()">view_balance</button><br>
+  <pre id="hashresult"></pre>
+    Previous Hash : <pre id="prehashresult"></pre>
+</center>
+  </body>
+<script>
+   
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var tkncon = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "trans",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "amnt",
+				"type": "uint256"
+			}
+		],
+		"name": "mint",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to_address",
+				"type": "address"
+			},
+			{
+				"name": "amnt",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+
+var to_address=document.getElementById("toadd");
+var t_amnt=document.getElementById("amount");
+
+var m_amnt=document.getElementById("amnt");
+
+var _spnadd=document.getElementById("spnadd");
+var _val=document.getElementById("val");
+
+var _ownadd=document.getElementById("ownadd");
+var _spndadd=document.getElementById("spndadd");
+
+var _frmadd=document.getElementById("frmadd");
+var _toadd=document.getElementById("toadd");
+var _value=document.getElementById("value");
+
+
+var output=document.getElementById('hashresult');
+var preoutput = document.getElementById('prehashresult');
+
+var tkn=tkncon.at('0x52b789ff96b0612783ced7973eaef2ccd36050a8')
+ web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is main net')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+
+function tot_sup(){
+        
+        return tkn.tot_sup(function(err,res){
+                if (!err) {
+                    output.innerText = res;
+                }
+                else{
+                     output.innerText = "Error";
+                }
+});
+}
+function transfer(){
+        
+        return tkn.transfer(to_address.value,t_amnt.value,function(err,res){
+                if (!err) {
+                    output.innerText = res;
+                }
+                else{
+                     output.innerText = "Error";
+                }
+});
+}
+function approve(){
+        
+        return tkn.approve(spnadd.value,val.value,function(err,res){
+                if (!err) {
+                    output.innerText = res;
+                }
+                else{
+                     output.innerText = "Error";
+                }
+});
+}
+function allowance(){
+        
+        return tkn.allowance(_ownadd.value,_spndadd,function(err,res){
+                if (!err) {
+                    output.innerText = res;
+                }
+                else{
+                     output.innerText = "Error";
+                }
+});
+}
+function transferFrom(){
+        
+        return tkn.tranferFrom(_frmadd.value,_toadd.value,_value.value,function(err,res){
+                if (!err) {
+                    output.innerText = res;
+                }
+                else{
+                     output.innerText = "Error";
+                }
+});
+}
+function view_balance(){
+        
+        return tkn.view_balance(function(err,res){
+                if (!err) {
+                    output.innerText = res;
+                }
+                else{
+                     output.innerText = "Error";
+                }
+});
+}
+        
+</script>
+</html>
