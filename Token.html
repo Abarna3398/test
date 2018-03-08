@@ -157,7 +157,7 @@ function transfer(){
 }
 function approve(){
         
-        return tkn.approve(spnadd.value,val.value,function(err,res){
+        return tkn.approve(_spnadd.value,_val.value,function(err,res){
                 if (!err) {
                     output.innerText = res;
                 }
